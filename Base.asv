@@ -35,7 +35,7 @@ tic
 %están organizados alfabéticamente en orden descendentes (filas) con el fin
 %de evitar recurrir a parámetros como el nombre o un identificador.
 
-% load('productos_parametros.mat')
+load('productos_parametros.mat')
 % Conjunto_s: Vector con los instantes donde puede sembrarse cada producto.
 % q:          Familia botánica a la que pertenece cada producto.
 % Ni:         Número de periodos que se demora el producto k en "Madurar".
@@ -45,14 +45,14 @@ tic
 
 %====Variables para la instancia de prueba
 
-% productos = datasample(1:21,3,'Replace',false);%Selecciono al azar 3 productos
-% lotes=datasample(1:length(Rkl(:,1)),2,'Replace',false);%Selecciono al azar 2 lotes
-% q=q(productos);
-% Conjunto_s=Conjunto_s(productos,:);
-% Ni=Ni(productos);
-% Pkt=Pkt(productos,:);
-% Rkl=Rkl(lotes,productos);
-% Al=Al(lotes');
+productos = datasample(1:21,3,'Replace',false);%Selecciono al azar 3 productos
+lotes=datasample(1:length(Rkl(:,1)),2,'Replace',false);%Selecciono al azar 2 lotes
+q=q(productos);
+Conjunto_s=Conjunto_s(productos,:);
+Ni=Ni(productos);
+Pkt=Pkt(productos,:);
+Rkl=Rkl(lotes,productos);
+Al=Al(lotes');
 load('instancia_prueba.mat')
 
 % ========================================================================
