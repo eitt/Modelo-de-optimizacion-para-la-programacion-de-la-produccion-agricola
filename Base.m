@@ -12,7 +12,8 @@
 % Se ingresan los parámetros del modelo, los cuales dependen de 
 % instancias generadas, por tanto, existirán múltiples archivos .mat, los
 % cuales tienen almacenadas las inctancias y serán cargadas al principio
-% del documento.
+% del documento. Además, en esta sección se construyen los vectores que se
+% utilizarán para generar las restricciones. (vectores b)
 % 2)______________________________________________________________________
 % Se construyen las matrices de restricción, el problema ha sido abordado
 % como un modelo de optimización entera mixta, en esta sección se construye
@@ -54,6 +55,42 @@ tic
 % Rkl=Rkl(lotes,productos);
 % Al=Al(lotes');
 load('instancia_prueba.mat')
+%Cantidad de periodos
+T=96;
+% Cantidad de productos
+K=length(Ni);
+% Cantidad de lotes
+L=length(Al);
+% Estimar la matriz de Covarianza de los precios;
+Covkkp=cov((Pkt)');
+% Se crea el conjunto de instantes de recogida.
+Conjunto_r=Conjunto_s*0;
+Restriccion_re=zeros(1,T*K*L);
+% Se calcula el conjunto de recogida para cada producto:
+
+% Bucle que recorre cada producto
+for k=1:K
+    % Ubicar los posibles periodos de siembra, posterior a ello, calcular
+    % el periodo de madurez Ni, de tal manera que re=s+Ni para cada
+    % producto. Como el conjunto de siembra y pro tanto el de recogida
+    % tiene dimensiones k*T, estas deben ser transformadas a un vector, con
+    % el fin de utilizarlas como restricciones.
+    Conjunto_r(k,find(Conjunto_s(k,:)==1)+Ni(k))=1;
+    % El conjunto de recogida es almacenado para un único lote y debe ser
+    % completado en un bucle de lotes (para evitar la creación de bucles
+    % extras)
+    Restriccion_re(((T*(k-1))+1:(T*(k-1))+T))=Conjunto_r(k,1:T);
+end
+
+% Se crea el conjunto para determinar el área máxima de siembra para cada
+% periodo, este conjunto funciona como restricción.
+Restriccion_Al=zeros(1,T*K*L);
+for l=1:L
+    % Se almacena el valor del área Al(l) para cada conjunto de tamaño k*T
+    Restriccion_Al(((T*K)*(l-1)+1:(T*K*l)))=Al(l);
+    % Se aprovecha el bucle de lotes para completar el vector de recogidas
+    Restriccion_re(((T*K)*(l-1)+1:(T*K*l)))=Restriccion_re(1:(T*K));
+end
 
 % ========================================================================
 %=============================SECCIÓN # 2=================================
@@ -64,6 +101,6 @@ load('instancia_prueba.mat')
 %=============================SECCIÓN # 3=================================
 % ========================================================================
 
-Covkkp=cov((Pkt)')%Covarianza de los precios;
+
 
 toc
