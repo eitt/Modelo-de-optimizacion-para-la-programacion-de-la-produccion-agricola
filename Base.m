@@ -252,17 +252,149 @@ b5=ones(K*T*L,1);
 % ========================================================================
 
 % ========================================================================
-% Familia de restricciones #6:
+% Familia de restricciones #6: Rotación de cultivos (k' diferente k)
+% ========================================================================
+% para la rotación de productos es necesario que el terreno descanse en
+% f^kk'o o^kk' periodos, si pertenecen o no a la misma familia botánica
+% (F). Teniendo en cuenta que, durante el presente caso se parte del
+% supuesto que todos los productos deben descansar la misma cantidad de
+% periodos, se construye una única restricción, la cual tiene en
+% consideración dos familias de variables de decisión: Y (variable binaria
+% utilziada para relacionar la recogida del producto) y la variable V
+% (binaria que indica la activación y desactivación de restricciones). El
+% tamaño total de la matriz A6 es equivalente a 2*K*T*L filas por la K*T*L
+% columnas.
+
+A6=zeros(2*T*K*L,4*T*K*L);
+% Posteriormente, se construye unas submatrices para cada periodo, estas se
+% componen de dos estilos de matrices, la primera es la de tiempos de
+% recogida, la cual corresponde a la sección de la restriccioón que incluye
+% a la variable Y, premultiplicada por el tiempo y por la familia botánica
+% del producto. La segunda submatriz tiene en consideración el tiempo menos
+% el tiempo Ni de maduración de cada producto. Con el fin de evitar excesos
+% de bucles, se realiza un único bucle para los lotes:
+
+% para cada lote
+for l=1:L
+    if l==1
+        %         Para cada producto (filas)
+        for k1=1:K
+            %         se realiza otro bucle en productos para completar la matriz
+            %         Para cada producto (columnas)
+            for k2=1: K
+                
+                %             se diligencia la diagonal cuando k1=k2
+                if k1==k2
+                    %                   Se crea el conjunto o submatriz de recolección
+                    M_recoleccion=ones(T,T).*(Conjunto_r(k1,:).*(1:T)*q(k1)).*Conjunto_r(k1,:)';
+%                     filas=(T)*(k1-1)+1:(T)*(k1-1)+T;
+%                     columnas=(T)*(k1-1)+1:(T)*(k1-1)+T;
+                    A6((T)*(k1-1)+1:(T)*(k1-1)+T,(T)*(k1-1)+1:(T)*(k1-1)+T)=M_recoleccion;
+                    %                   Avanzando por columnas
+                elseif k2>k1
+                    %                   Se crea el conjunto o submatriz de siembra
+                    M_siembra=-ones(T,T).*(Conjunto_r(k2,:).*((1:T)-Ni(k2))*q(k2)).*Conjunto_r(k2,:)';
+%                     filas=(T)*(k1-1)+1:(T)*(k1-1)+T;
+%                     columnas=(T)*(k2-1)+1:(T)*(k2-1)+T;
+                    A6((T)*(k1-1)+1:(T)*(k1-1)+T,(T)*(k2-1)+1:(T)*(k2-1)+T)=M_siembra;
+                else
+                    %                   Se crea el conjunto o submatriz de siembra
+                    M_siembra=-ones(T,T).*(Conjunto_r(k2,:).*((1:T)-Ni(k2))*q(k2)).*Conjunto_r(k2,:)';
+%                     columnas=(T)*(k2-1)+1:(T)*(k2-1)+T
+%                     filas=(T)*(k1-1)+1:(T)*(k1-1)+T
+                    A6((T)*(k1-1)+1:(T)*(k1-1)+T,(T)*(k2-1)+1:(T)*(k2-1)+T)=M_siembra;
+                end
+            end
+            
+        end
+    else
+        % Se replica la distribución de variables para todos los lotes
+        A6(K*T*(l-1)+1:K*T*(l),K*T*(l-1)+1:K*T*(l))=A6(1:K*T,1:K*T);
+    end
+end
+% Posterior a la creación de las restricciones Y, se construye la
+% restricción de la variable V, la cual va desde 1 hasta K*L*T. Su valor es
+% el negativo de un número muy grande
+
+A6(1:K*T*L,K*T*L+1:2*K*T*L)=-B*eye(K*T*L,K*T*L);
+% Finalmente, se replica la matriz de carga, pero con valores negativos,
+% con el fin de generar cada par de variables excluyentes:
+
+[row,col] = size(A6);
+A6(row/2+1:row,:)=-A6(1:row/2,:);
+
+% para construir el vector b6, es neceario determinar en cuales instantes
+% ningún producto puede ser cosechado, con el fin de excluir las
+% restricciones, para ello se parte de identificar en el vector Conjunto_r,
+% en cuáles posiciones (para los tres productos) no es posible recoger,
+% igualar ese valor a cero y escribir -1 para los demás casos:
+
+% se crea un vector par almacenar la restricción
+vector=((1:T)*0)';
+% Se iguala a 1 las posiciones donde se pueda recoger algún producto:
+vector(find(sum(Conjunto_r(:,1:length(Conjunto_r))==1)~=0))=-1;
+% Se crea el vector b6
+b6=zeros(2*K*T*L,1);
+% Se asigna y replica el vector de restricción en la primera mitad del
+% vector b6
+b6(1:K*T*L)=repmat(vector,2*K,1);
+% Se agrega el complemento de la retricción (sumar valor B)
+b6(K*T*L+1:2*K*T*L)=(-b6(1:K*T*L).*B)+b6(1:K*T*L);
 % ========================================================================
 
-% ========================================================================
-
 
 % ========================================================================
-% Familia de restricciones #6
+% Familia de restricciones #7 Espacio entre siembra del mismo cultivo
 % ========================================================================
+% Como caso especial, cuando no se realiza la rotación de un producto, la
+% recogida (y respectiva siembra) del siguiente producto no puede
+% realizarse en un periodo inferior de descanso de al menos fkk semanas.
+% Por tanto, se construye una matriz de restricción A7 con tantas filas
+% como varialbes Y y que abarca una cantidad de columnas igual a la
+% cantidad de variables de decisión:
 
+% Se construye el la matriz:
+A7=zeros(T*K*L,4*T*K*L);
 
+% Se hace un recorrido para cada lote
+for l=1:L
+    %     Para evitar excesos de bucles se calcula todo en el primer lote y se
+    %     reproduce para los lotes posteriores
+    if l==1
+        %     Se realiza un recorrido para cada producto
+        for k=1:K
+            %         Se ubican las filas correspondientes al intervalo de
+            %         madurez del producto:
+            [row col] = (find(eye(T,T).*Conjunto_r(k,:)==1));
+            %         Se define el intervalo de madurez posterior a la
+            %         recogida de cada producto más la holgura o descanso
+%              [val,loc] = min((find(Conjunto_r(k,1:T)==1)+Ni(k)+1), ones(1,(length(find(Conjunto_r(k,1:T)==1)+Ni(k)+1)))*T)
+            intervalo_madurez=[find(Conjunto_r(k,1:T)==1)+1;min((find(Conjunto_r(k,1:T)==1)+Ni(k)+1), ones(1,(length(find(Conjunto_r(k,1:T)==1)+Ni(k)+1)))*T)];
+            %         Se contruye una matriz para registar los periodos de
+            %         madurez
+            M_madurez=zeros(T,T);
+            %             Se realiza un bucle para cada uno de los posibles
+            %             periodos de madurez
+            for i=1:length(intervalo_madurez)
+                M_madurez(row(i),intervalo_madurez(1,i):intervalo_madurez(2,i))=1;
+            end
+            
+            %            fila1= (T)*(k-1)+(T*K)*(l-1)+1
+            %             fila2=(T)*(k-1)+(T*K)*(l-1)+T
+            %             col1=1
+            %             col2=(T*K)
+            %         Se repite el patrón para todos los productos
+            A7((T)*(k-1)+(T*K)*(l-1)+1:(T)*(k-1)+(T*K)*(l-1)+T,1:(T*K))=repmat(M_madurez,1,K);
+            %         Se Agrega la diagonal en el producto correspondiente:
+            A7((T)*(k-1)+1:(T)*(k-1)+T,(T)*(k-1)+1:(T)*(k-1)+T)=A7((T)*(k-1)+1:(T)*(k-1)+T,(T)*(k-1)+1:(T)*(k-1)+T)+eye(T,T).*Conjunto_r(k,:);
+        end
+    else
+        % Se replica la distribución de variables para todos los lotes
+        A7(K*T*(l-1)+1:K*T*(l),K*T*(l-1)+1:K*T*(l))=A7(1:K*T,1:K*T);
+    end
+end
+% Se crea el vector de restricción B5, el cual posee valores de 1:
+b5=ones(K*T*L,1);
 % ========================================================================
 
 
@@ -286,15 +418,4 @@ b5=ones(K*T*L,1);
 % ========================================================================
 
 
-
-[row col] = (find(eye(T,T).*Conjunto_r(1,:)==1));
-
-size(Conjunto_r)
-intervalo_madurez=[find(Conjunto_r(1,1:96)==1)-Ni(1);find(Conjunto_r(1,1:96)==1)-1];
-
-M_madurez=zeros(T,T);
-for i=1:12
-    M_madurez(row(i),intervalo_madurez(1,i):intervalo_madurez(2,i))=1;%madurez -1 para el producto 1
-end
-M_identidad.*Conjunto_r(1,:);%restricción diagonal para el producto1
 toc
