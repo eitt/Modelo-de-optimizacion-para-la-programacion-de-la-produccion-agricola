@@ -394,7 +394,7 @@ for l=1:L
     end
 end
 % Se crea el vector de restricción B5, el cual posee valores de 1:
-b5=ones(K*T*L,1);
+b7=ones(K*T*L,1);
 % ========================================================================
 
 
@@ -417,5 +417,23 @@ b5=ones(K*T*L,1);
 %=============================SECCIÓN # 3=================================
 % ========================================================================
 
+% Se integran todas las restricciones, comenzando por la matriz de cargas:
+A=cat(1,A2,A3,A4,A5,A6,A7);
+% Seguida del vector de desigualdades
+b=cat(1,b2,b3,b4,b5,b6,b7);
 
+f = -repmat(Pkt(:),L,1);
+
+f=cat(1,f,zeros(3*L*K*T,1));
+intcon = 1:2*T*K*L;
+
+Aeq = [];
+beq = [];
+
+lb = zeros(length(f),1);
+
+ub =  cat(1,ones(2*T*K*L,1),repmat(Inf,2*T*K*L,1));
+x=intlinprog(f,intcon',A,b,[],[],lb,ub)
+intcon2=[]
+x=intlinprog(f,intcon2,A,b,[],[],lb,ub)
 toc
