@@ -324,13 +324,13 @@ for l=1:L
                     for t=1:T
                         %                         Diagonal antes
                         if t>1
-                            RANGO_ANTES=(max(1,t-Ni(k2)):t-1);
+                            RANGO_ANTES=(max(1,t-Ni(k2)):t-1)
                             M_recoleccion(t,RANGO_ANTES)=-(RANGO_ANTES-Ni(k2))*q(k2);
                         end
-                        RANGO_DIAGONAL=(t:min(T,t+Ni(k1)-1));
+                        RANGO_DIAGONAL=(t:min(T,t+Ni(k1)-1))
                         M_recoleccion(t,RANGO_DIAGONAL)=(RANGO_DIAGONAL)*q(k1);
                         if t+Ni(k1)<T
-                            RANGO_DESPUES=(t+Ni(k1):min(T,t+Ni(k1)+Ni(k2)-1));
+                            RANGO_DESPUES=(t+Ni(k1):min(T,t+Ni(k1)+Ni(k2)-1))
                             M_recoleccion(t,RANGO_DESPUES)=-(RANGO_DESPUES-Ni(k2))*q(k2);
                         end
                     end
@@ -381,6 +381,7 @@ A6(1:K*T*L,K*T*L+1:2*K*T*L)=-B*eye(K*T*L,K*T*L);
 % diferencia entre grupos F^k,k' o o^k,k'; en este caso, ambas igual a 1,
 % por tanto:
 b6=cat(1,-ones(K*L*T,1),(-ones(K*L*T,1)+B));
+
 % ========================================================================
 
 % ========================================================================
@@ -462,14 +463,16 @@ b7=b1;
 % Se integran todas las restricciones, comenzando por la matriz de cargas:
 A=cat(1,A1,A2,A3,A4,A5,A6,A7);
 % Seguida del vector de desigualdades
-b=cat(1,b1,b2,b3,b4,b5,b6,b7);
+b=cat(1,b1,b2,b3,b4,b5,b8,b7);
 
 % % Se integran todas las restricciones, comenzando por la matriz de cargas:
 % A=cat(1,A1,A2,A3,A4,A5,A7);
 % % Seguida del vector de desigualdades
 % b=cat(1,b1,b2,b3,b4,b5,b7);
 
+
 f = -repmat(Pkt(:),L,1);
+
 f=cat(1,zeros(2*L*K*T,1),f,zeros(L*K*T,1));
 intcon = 1:2*T*K*L;
 
@@ -479,8 +482,8 @@ beq = [];
 lb = zeros(length(f),1);
 
 ub =  cat(1,ones(2*T*K*L,1),repmat(Inf,2*T*K*L,1));
-x=intlinprog(f,intcon',A,b,[],[],lb,ub);
-
+x=intlinprog(f,intcon',A,b,[],[],lb,ub)
+solucion=x'
 % intcon2=[]
 % x=intlinprog(f,intcon2,A,b,[],[],lb,ub)
 toc
