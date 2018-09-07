@@ -64,7 +64,21 @@ K=length(Ni);
 % Cantidad de lotes
 L=length(Al);
 % Estimar la matriz de Covarianza de los precios;
-Covkkp=cov((Pkt)');
+% Covkkp=cov((Pkt)');
+Covkkp=cov(diff(log(Pkt)',1));
+% Determinar la cantidad de variables de decisión para cada una de las
+% familias de variables:
+
+% {Y_t }^{l,k}
+Cant_Y=K*T*L;
+% {V_t }^{l,k}
+Cant_V=K*T*L;
+% {Z_t }^{l,k}
+Cant_Z=K*T*L;
+% {_y }^{k,k}
+Cant_U=K*K*T*L;
+Cant_var=Cant_Y+Cant_V+Cant_Z+Cant_U;
+
 % Se crea el conjunto de instantes de recogida.
 Conjunto_r=Conjunto_s*0;
 Restriccion_re=zeros(1,T*K*L);
@@ -114,7 +128,7 @@ end
 
 % Se genera una matriz identidad en las variables Y (dicotómica de recogida
 % del producto):
-A1=eye(T*K*L,T*K*L*4);
+A1=eye(T*K*L,Cant_var);
 
 % El vector b1 es la transpuesta del vector Restriccion_re
 b1=Restriccion_re';
@@ -124,7 +138,7 @@ b1=Restriccion_re';
 % (contínua) a partir de la premultiplicación por un número muy grande, por
 % tanto, la matriz de restricciones se compone de dos diagonales y un
 % espacio vacío:
-A2=cat(2,eye(T*K*L,T*K*L)*(-B),zeros(T*K*L,T*K*L),eye(T*K*L,T*K*L),zeros(T*K*L,T*K*L));
+A2=cat(2,eye(Cant_Y,Cant_Y)*(-B),zeros(Cant_V,Cant_V),eye(Cant_Z,Cant_Z),zeros(Cant_Y,Cant_U));
 
 % El vector b2 es igual a un vector 0
 b2=b1*0;
@@ -137,7 +151,7 @@ b2=b1*0;
 
 % La matriz indica el área máxima destinada a cda cultivo (variable Z), por
 % tanto, se modela como una diagonal igualada a la restricción:
-A3=cat(2,zeros(T*K*L,T*K*L),zeros(T*K*L,T*K*L),eye(T*K*L,T*K*L),zeros(T*K*L,T*K*L));
+A3=cat(2,zeros(Cant_Y,Cant_Y),zeros(Cant_V,Cant_V),eye(Cant_Z,Cant_Z),zeros(Cant_Z,Cant_U));
 
 % El vector b3 es la transpuesta del vector Restriccion_Al
 b3=Restriccion_Al';
@@ -163,7 +177,7 @@ Demanda_Gv=Demanda_Gv(F_Gv);
 % igual a la cantidad de familias a satisfacer en cada tiempo (en ls filas)
 % (length(F_Gv)*T) por la cantidad de variables de decisión:
 
-A4=zeros(length(F_Gv)*T,T*K*L*4);
+A4=zeros(length(F_Gv)*T,Cant_var);
 % por su parte, el vectyor b4 tendrá la misma cantidad de filas y se
 % subdividirá en tantas demandas como familias Gv existan:
 b4=zeros(length(F_Gv)*T,1);
@@ -210,7 +224,7 @@ end
 % este caso es igual al número de variables de decisión, por tanto, la
 % matriz A5 inicial es igual a:
 
-A5=zeros(K*T*L,K*T*L*4);
+A5=zeros(Cant_Y,Cant_var);
 % Se hace un recorrido para cada lote
 for l=1:L
     %     Para evitar excesos de bucles se calcula todo en el primer lote y se
@@ -220,7 +234,7 @@ for l=1:L
         for k=1:K
             %         Se ubican las filas correspondientes al intervalo de
             %         madurez del producto:
-            [row col] = (find(eye(T,T).*Conjunto_r(k,:)==1));
+            [row, col] = (find(eye(T,T).*Conjunto_r(k,:)==1));
             %         Se define el intervalo de madurez previo a la
             %         recogida de cada producto
             intervalo_madurez=[find(Conjunto_r(k,1:T)==1)-Ni(k);find(Conjunto_r(k,1:T)==1)-1];
@@ -248,7 +262,7 @@ for l=1:L
     end
 end
 % Se crea el vector de restricción B5, el cual posee valores de 1:
-b5=ones(K*T*L,1);
+b5=ones(Cant_Y,1);
 % ========================================================================
 
 % ========================================================================
@@ -265,7 +279,7 @@ b5=ones(K*T*L,1);
 % tamaño total de la matriz A6 es equivalente a 2*K*T*L filas por la K*T*L
 % columnas.
 
-A6=zeros(2*T*K*L,4*T*K*L);
+A6=zeros(Cant_Y*2,Cant_var);
 % Posteriormente, se construye unas submatrices para cada periodo, estas se
 % componen de dos estilos de matrices, la primera es la de tiempos de
 % recogida, la cual corresponde a la sección de la restriccioón que incluye
@@ -273,7 +287,7 @@ A6=zeros(2*T*K*L,4*T*K*L);
 % del producto. La segunda submatriz tiene en consideración el tiempo menos
 % el tiempo Ni de maduración de cada producto. Con el fin de evitar excesos
 % de bucles, se realiza un único bucle para los lotes:
-A6=zeros(2*T*K*L,4*T*K*L);
+
 
 % para cada Lote
 for l=1:L
@@ -394,7 +408,7 @@ b6=cat(1,-ones(K*L*T,1),(-ones(K*L*T,1)+B));
 % cantidad de variables de decisión:
 
 % Se construye el la matriz:
-A7=zeros(T*K*L,4*T*K*L);
+A7=zeros(Cant_Y,Cant_var);
 
 % Se hace un recorrido para cada lote
 for l=1:L
@@ -405,7 +419,7 @@ for l=1:L
         for k=1:K
             %         Se ubican las filas correspondientes al intervalo de
             %         madurez del producto:
-            [row col] = (find(eye(T,T).*Conjunto_r(k,:)==1));
+            [row, col] = (find(eye(T,T).*Conjunto_r(k,:)==1));
             %         Se define el intervalo de madurez posterior a la
             %         recogida de cada producto más la holgura o descanso
 %              [val,loc] = min((find(Conjunto_r(k,1:T)==1)+Ni(k)+1), ones(1,(length(find(Conjunto_r(k,1:T)==1)+Ni(k)+1)))*T)
@@ -441,18 +455,145 @@ b7=b1;
 
 
 % ========================================================================
-% Familia de restricciones #6
+% Familia de restricciones #8: Proporción de áreas recogidas (para cada
+% par)
+% ========================================================================
+
+% La octava familia de restricciones relacionan dos variables de decisión:
+% Uk,k' (la cual premultiplica l amatriz de varianza-covarianza) con la
+% variable de decisión Z l,k,t y el rendimiento (calculando así el volumen 
+% de producción) Como la variable U no posee índice t, la matriz de cargas
+% para Z tiene (k^2 )*T filas (para estimar cada interacción) y L*K*T
+% columnas.
+
+A8=zeros(Cant_U,Cant_var);
+
+% se contruye el vector b8 de restricciones, el cual relaciona las áreas
+% máximas donde está cultivado cada producto:
+b8=zeros(Cant_U,1);
+% para reducir la cantidad de bucles, la asignación de las cargas comienza
+% por los productos (conjuntos que más se repiten) y posteriormente se
+% recalcula el valor para el respectivo lote:
+
+for k1=1:K
+    for k2=1:K
+        % se genera el bucle para cada lote:
+        for l=1:L
+            if k1==k2
+            %         Se crea una matriz diagonal a la cual se premultiplican las
+            %         áreas:
+            M_areas=eye(T,T)*(-Rkl(l,k1)*Al(l)*Rkl(l,k2)-Rkl(l,k2)*Al(l)*Rkl(l,k1));
+            %         Se asigna el valor de la submatriz en la matriz de cargas A:
+            A8((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areas;
+            else
+                M_areask1=eye(T,T)*(-Rkl(l,k2)*Al(l)*Rkl(l,k1));
+                M_areask2=eye(T,T)*(-Rkl(l,k1)*Al(l)*Rkl(l,k2));
+                A8((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areask1;
+                A8((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k2-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k2-1)+T)=M_areask2;
+            end
+        end
+    end
+end
+
+% Respecto a la variable U, se crea una diagonal positiva
+A8(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=eye(Cant_U,Cant_U);
+
+% Se diligencia el vector b8
+
+for l=1:L
+    b8((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L))=-Al(l)^2;
+end
+b8=b8.^2;
+col1=b8*0;
+col2=col1;
+
+for l=1:L
+    for k1=1:K
+        recorrido1=(K*K*T)*(l-1)+(K*T)*(k1-1);
+        b8(recorrido1+1:recorrido1+K*T)=b8(recorrido1+1:recorrido1+K*T)*Rkl(l,k1);
+        col1(recorrido1+1:recorrido1+K*T)=Rkl(l,k1);
+        for k2=1:K
+            recorrido2=recorrido1+T*(k2-1);
+            b8(recorrido2+1:recorrido2+T)=b8(recorrido2+1:recorrido2+T)*Rkl(l,k2);
+            col2(recorrido2+1:recorrido2+T)=Rkl(l,k2);
+        end
+    end    
+end
+
 % ========================================================================
 
 
 % ========================================================================
+% Familia de restricciones #9: Proporción de Áreas U^{k,k'}?Cantidad de
+% producto k, recogido en cada instante t.
+% ========================================================================
+% Se contruye la matriz de cargas para la familia de restricciones
+A9=zeros(Cant_U,Cant_var);
+% Se construye el vector de restricciones b9:
+b9=zeros(Cant_U,1);
 
+% para reducir la cantidad de bucles, la asignación de las cargas comienza
+% por los productos (conjuntos que más se repiten) y posteriormente se
+% recalcula el valor para el respectivo lote:
+
+for k1=1:K
+    for k2=1:K
+        % se genera el bucle para cada lote:
+        for l=1:L
+            if k1==k2
+            %         Se crea una matriz diagonal a la cual se premultiplican las
+            %         áreas:
+            M_areas=eye(T,T)*(-Rkl(l,k1)*Al(l));
+            %         Se asigna el valor de la submatriz en la matriz de cargas A:
+            A9((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areas;
+            else
+                
+                M_areask2=eye(T,T)*(-Rkl(l,k1)*Al(l));
+                
+                A9((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k2-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k2-1)+T)=M_areask2;
+            end
+        end
+    end
+end
+A9(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=eye(Cant_U,Cant_U);
+% ========================================================================
 
 % ========================================================================
-% Familia de restricciones #6
+% Familia de restricciones #10: Proporción de Áreas U^{k,k'}?Cantidad de
+% producto k, recogido en cada instante t.
+% ========================================================================
+% Se contruye la matriz de cargas para la familia de restricciones
+A10=zeros(Cant_U,Cant_var);
+% Se construye el vector de restricciones b9:
+b10=zeros(Cant_U,1);
+
+% para reducir la cantidad de bucles, la asignación de las cargas comienza
+% por los productos (conjuntos que más se repiten) y posteriormente se
+% recalcula el valor para el respectivo lote:
+
+
+for k1=1:K
+    for k2=1:K
+        % se genera el bucle para cada lote:
+        for l=1:L
+            if k1==k2
+            %         Se crea una matriz diagonal a la cual se premultiplican las
+            %         áreas:
+            M_areas=eye(T,T)*(-Rkl(l,k1)*Al(l));
+            %         Se asigna el valor de la submatriz en la matriz de cargas A:
+            A10((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areas;
+            else
+                M_areask1=eye(T,T)*(-Rkl(l,k2)*Al(l));
+               
+                A10((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areask1;
+                
+            end
+        end
+    end
+end
+A10(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=eye(Cant_U,Cant_U);
 % ========================================================================
 
-% ========================================================================
 
 
 % ========================================================================
@@ -460,27 +601,51 @@ b7=b1;
 % ========================================================================
 % 
 % Se integran todas las restricciones, comenzando por la matriz de cargas:
-A=cat(1,A1,A2,A3,A4,A5,A6,A7);
+A=cat(1,A1,A2,A3,A4,A5,A6,A7,A9,A10);
 % Seguida del vector de desigualdades
-b=cat(1,b1,b2,b3,b4,b5,b6,b7);
+b=cat(1,b1,b2,b3,b4,b5,b6,b7,b9,b10);
+% 
+% % Se integran todas las restricciones, comenzando por la matriz de cargas:
+% A=cat(1,A1,A2,A3,A4,A5,A6,A7,A8);
+% % Seguida del vector de desigualdades
+% b=cat(1,b1,b2,b3,b4,b5,b6,b7,b8);
+% 
+
 
 % % Se integran todas las restricciones, comenzando por la matriz de cargas:
 % A=cat(1,A1,A2,A3,A4,A5,A7);
 % % Seguida del vector de desigualdades
 % b=cat(1,b1,b2,b3,b4,b5,b7);
 
+cova=zeros(1,Cant_U/L);
+for k1= 1:K
+    for k2=1:k
+        recorrido=((K*T)*(k1-1))+T*(k2-1);
+        cova(recorrido+1:recorrido+T)=Covkkp(k1,k2);
+    end
+end
+cova=repmat(cova,1,L);
+
+f2=cat(1,zeros(Cant_var-Cant_U,1),cova');
+
 f = -repmat(Pkt(:),L,1);
-f=cat(1,zeros(2*L*K*T,1),f,zeros(L*K*T,1));
-intcon = 1:2*T*K*L;
+f=cat(1,zeros(Cant_Y+Cant_V,1),f,zeros(Cant_U,1));
+intcon = 1:Cant_Y+Cant_V;
 
 Aeq = [];
 beq = [];
 
 lb = zeros(length(f),1);
-
-ub =  cat(1,ones(2*T*K*L,1),repmat(Inf,2*T*K*L,1));
+for l=1:L
+    b88((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L))=Al(l);
+end
+% ub =  cat(1,ones(Cant_Y+Cant_V,1),repmat(Inf,Cant_Z,1),b88');
+ub =  cat(1,ones(Cant_Y+Cant_V,1),Inf(Cant_Z+Cant_U,1));
 x=intlinprog(f,intcon',A,b,[],[],lb,ub);
-
+x2=intlinprog(f2,intcon',A,b,[],[],lb,ub);
+ponderacion=0.999999995;
+f3=f*(1-ponderacion)+f2*ponderacion;
+x3=intlinprog(f3,intcon',A,b,[],[],lb,ub);
 % intcon2=[]
 % x=intlinprog(f,intcon2,A,b,[],[],lb,ub)
 toc
