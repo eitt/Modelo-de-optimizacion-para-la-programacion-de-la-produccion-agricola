@@ -482,13 +482,12 @@ for k1=1:K
             if k1==k2
             %         Se crea una matriz diagonal a la cual se premultiplican las
             %         áreas:
-
-            M_areas=eye(T,T)*(Rkl(l,k2)*Al(l)*Rkl(l,k1)*2);
+            M_areas=eye(T,T)*(-Rkl(l,k1)*Al(l)*Rkl(l,k2)-Rkl(l,k2)*Al(l)*Rkl(l,k1));
             %         Se asigna el valor de la submatriz en la matriz de cargas A:
             A8((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areas;
             else
-                M_areask1=eye(T,T)*(Rkl(l,k1)*Al(l)*Rkl(l,k1));
-                M_areask2=eye(T,T)*(Rkl(l,k1)*Al(l)*Rkl(l,k2));
+                M_areask1=eye(T,T)*(-Rkl(l,k2)*Al(l)*Rkl(l,k1));
+                M_areask2=eye(T,T)*(-Rkl(l,k1)*Al(l)*Rkl(l,k2));
                 A8((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areask1;
                 A8((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k2-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k2-1)+T)=M_areask2;
             end
@@ -497,14 +496,14 @@ for k1=1:K
 end
 
 % Respecto a la variable U, se crea una diagonal positiva
-A8(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=-eye(Cant_U,Cant_U);
+A8(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=eye(Cant_U,Cant_U);
 
 % Se diligencia el vector b8
 
 for l=1:L
     b8((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L))=Al(l);
 end
-b8=b8.^2;
+b8=-b8.^2;
 col1=b8*0;
 col2=col1;
 
@@ -520,8 +519,8 @@ for l=1:L
         end
     end    
 end
-
-
+b8=(b8.*col1).*col2;
+leo=A8(:,Cant_U+1:Cant_var)=(A8(:,Cant_U+1:Cant_var)).*col1.*col2;
 % ========================================================================
 
 
@@ -538,16 +537,26 @@ b9=zeros(Cant_U,1);
 % por los productos (conjuntos que más se repiten) y posteriormente se
 % recalcula el valor para el respectivo lote:
 
-
-
-for l=1:L
-  A9((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L),Cant_Y+Cant_V+(K*T)*(l-1)+1:Cant_Y+Cant_V+(K*T)*(l-1)+K*T)=repmat(eye(K*T),K,1);
-  b9((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L))=Al(l);
+for k1=1:K
+    for k2=1:K
+        % se genera el bucle para cada lote:
+        for l=1:L
+            if k1==k2
+            %         Se crea una matriz diagonal a la cual se premultiplican las
+            %         áreas:
+            M_areas=eye(T,T)*(-Rkl(l,k1)*Al(l));
+            %         Se asigna el valor de la submatriz en la matriz de cargas A:
+            A9((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areas;
+            else
+                
+                M_areask2=eye(T,T)*(-Rkl(l,k1)*Al(l));
+                
+                A9((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k2-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k2-1)+T)=M_areask2;
+            end
+        end
+    end
 end
-
-A9(:,Cant_Y+Cant_V+1:Cant_U)=A9(:,Cant_Y+Cant_V+1:Cant_U).*b9.*col1.*col2*-1;
-A9(:,Cant_var-Cant_U+1:Cant_var)=eye(Cant_U,Cant_U);
-b9=b9*0;
+A9(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=eye(Cant_U,Cant_U);
 % ========================================================================
 
 % ========================================================================
@@ -571,12 +580,12 @@ for k1=1:K
             if k1==k2
             %         Se crea una matriz diagonal a la cual se premultiplican las
             %         áreas:
-            M_areas=-eye(T,T)*(Rkl(l,k1)*Al(l)*Rkl(l,k2));
+            M_areas=eye(T,T)*(-Rkl(l,k1)*Al(l));
             %         Se asigna el valor de la submatriz en la matriz de cargas A:
             A10((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areas;
             else
-%                 M_areask1=eye(T,T)*(-Rkl(l,k2)*Al(l));
-                M_areask1=-eye(T,T)*(Rkl(l,k1)*Al(l)*Rkl(l,k2));
+                M_areask1=eye(T,T)*(-Rkl(l,k2)*Al(l));
+               
                 A10((K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+1:(K*K*T)*(l-1)+(K*T)*(k1-1)+T*(k2-1)+T,Cant_Y+Cant_V+(K*T)*(l-1)+T*(k1-1)+1:Cant_Y+Cant_Z+(K*T)*(l-1)+T*(k1-1)+T)=M_areask1;
                 
             end
@@ -592,17 +601,22 @@ A10(:,Cant_Y+Cant_V+Cant_Z+1:Cant_var)=eye(Cant_U,Cant_U);
 %=============================SECCIÓN # 3=================================
 % ========================================================================
 % 
-% % Se integran todas las restricciones, comenzando por la matriz de cargas:
-% A=cat(1,A1,A2,A3,A4,A5,A6,A7,A8,A9);
-% % Seguida del vector de desigualdades
-% b=cat(1,b1,b2,b3,b4,b5,b6,b7,b8,b9);
-%
 % Se integran todas las restricciones, comenzando por la matriz de cargas:
 A=cat(1,A1,A2,A3,A4,A5,A6,A7,A8,A9,A10);
 % Seguida del vector de desigualdades
 b=cat(1,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10);
+% 
+% % Se integran todas las restricciones, comenzando por la matriz de cargas:
+% A=cat(1,A1,A2,A3,A4,A5,A6,A7,A8);
+% % Seguida del vector de desigualdades
+% b=cat(1,b1,b2,b3,b4,b5,b6,b7,b8);
+% 
 
 
+% % Se integran todas las restricciones, comenzando por la matriz de cargas:
+% A=cat(1,A1,A2,A3,A4,A5,A7);
+% % Seguida del vector de desigualdades
+% b=cat(1,b1,b2,b3,b4,b5,b7);
 
 cova=zeros(1,Cant_U/L);
 for k1= 1:K
@@ -630,9 +644,9 @@ end
 ub =  cat(1,ones(Cant_Y+Cant_V,1),Inf(Cant_Z+Cant_U,1));
 x=intlinprog(f,intcon',A,b,[],[],lb,ub);
 x2=intlinprog(f2,intcon',A,b,[],[],lb,ub);
-ponderacion=0.95;
-f3=f*(1-ponderacion)+f2*ponderacion;
-x3=intlinprog(f3,intcon',A,b,[],[],lb,ub);
+% ponderacion=0.999999995;
+% f3=f*(1-ponderacion)+f2*ponderacion;
+% x3=intlinprog(f3,intcon',A,b,[],[],lb,ub);
 % intcon2=[]
 % x=intlinprog(f,intcon2,A,b,[],[],lb,ub)
 toc
