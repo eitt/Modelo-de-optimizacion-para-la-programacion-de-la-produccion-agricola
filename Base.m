@@ -1,7 +1,7 @@
-%Este es el código para solucionar de manera exacta un modelo de
-%optimización multiobjetivo (como aproximación se trabajan las dos
-%funciones de manera independiente), el cual hace parte del proyecto de
-%investigación titulado: Modelo de optimización multiobjetivo para la
+% Este es el código para solucionar de manera exacta un modelo de
+% optimización multiobjetivo (como aproximación se trabajan las dos
+% funciones de manera independiente), el cual hace parte del proyecto de
+% investigación titulado: Modelo de optimización multiobjetivo para la
 % programación de la producción agrícola a pequeña escala en Santander,
 % Colombia, desarrollado por Leonardo Talero, bajo la dirección de Henry
 % Lamos & Edwin Garavito.
@@ -526,7 +526,7 @@ end
 
 
 % ========================================================================
-% Familia de restricciones #9: Proporción de Áreas U^{k,k'}?Cantidad de
+% Familia de restricciones #9: Proporción de Áreas U^{k,k'} Cantidad de
 % producto k, recogido en cada instante t.
 % ========================================================================
 % Se contruye la matriz de cargas para la familia de restricciones
@@ -606,7 +606,7 @@ b=cat(1,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10);
 
 cova=zeros(1,Cant_U/L);
 for k1= 1:K
-    for k2=1:k
+    for k2=1:K
         recorrido=((K*T)*(k1-1))+T*(k2-1);
         cova(recorrido+1:recorrido+T)=Covkkp(k1,k2);
     end
@@ -623,9 +623,9 @@ Aeq = [];
 beq = [];
 
 lb = zeros(length(f),1);
-for l=1:L
-    b88((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L))=Al(l);
-end
+% for l=1:L
+%     b88((Cant_U/L)*(l-1)+1:(Cant_U/L)*(l-1)+(Cant_U/L))=Al(l);
+% end
 % ub =  cat(1,ones(Cant_Y+Cant_V,1),repmat(Inf,Cant_Z,1),b88');
 ub =  cat(1,ones(Cant_Y+Cant_V,1),Inf(Cant_Z+Cant_U,1));
 x=intlinprog(f,intcon',A,b,[],[],lb,ub);

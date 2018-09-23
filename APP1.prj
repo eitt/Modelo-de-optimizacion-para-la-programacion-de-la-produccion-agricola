@@ -1,30 +1,31 @@
 <deployment-project plugin="plugin.apptool" plugin-version="1.0">
-  <configuration file="C:\Users\Usuario\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL\APP1.prj" location="C:\Users\Usuario\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL" name="APP1" target="target.mlapps" target-name="Package App">
+  <configuration build-checksum="4013247057" file="C:\Users\LEONARDO\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL\APP1.prj" location="C:\Users\LEONARDO\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL" name="APP1" target="target.mlapps" target-name="Package App">
     <param.appname>APP1</param.appname>
-    <param.authnamewatermark />
-    <param.email />
-    <param.company />
-    <param.icon />
-    <param.icons />
+    <param.authnamewatermark>leonardo talero</param.authnamewatermark>
+    <param.email>leonardo.talero@correo.uis.edu.co</param.email>
+    <param.company>Universidad Industrial de Santander</param.company>
+    <param.icon>${PROJECT_ROOT}\APP1_resources\icon_24.png</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\APP1_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\APP1_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\APP1_resources\icon_16.png</file>
+    </param.icons>
     <param.summary />
     <param.description />
-    <param.screenshot />
+    <param.screenshot>C:\Users\LEONARDO\Pictures\a place in my dreams.JPG</param.screenshot>
     <param.version>1.0</param.version>
     <param.products.name />
     <param.products.id />
     <param.products.version />
     <param.platforms />
-    <param.output>C:\Users\Usuario\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL</param.output>
+    <param.output>C:\Users\LEONARDO\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL</param.output>
     <param.guid>37534684-5f46-436b-aec7-ab5b5bdb23c4</param.guid>
     <unset>
       <param.authnamewatermark />
       <param.email />
       <param.company />
-      <param.icon />
-      <param.icons />
       <param.summary />
       <param.description />
-      <param.screenshot />
       <param.version />
       <param.products.name />
       <param.products.id />
@@ -41,37 +42,12 @@
     <fileset.resources />
     <fileset.package />
     <build-deliverables>
-      <file location="C:\Users\Usuario\Dropbox\00 MAESTRIA\02-01 Modelo" name="00 FINAL" optional="false">C:\Users\Usuario\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL</file>
+      <file location="C:\Users\LEONARDO\Dropbox\00 MAESTRIA\02-01 Modelo" name="00 FINAL" optional="false">C:\Users\LEONARDO\Dropbox\00 MAESTRIA\02-01 Modelo\00 FINAL</file>
     </build-deliverables>
     <workflow />
     <matlab>
       <root>C:\Program Files\MATLAB\R2017a</root>
-      <toolboxes>
-        <toolbox name="fixedpoint" />
-        <toolbox name="matlabcoder" />
-        <toolbox name="matlabhdlcoder" />
-        <toolbox name="embeddedcoder" />
-      </toolboxes>
-      <toolbox>
-        <fixedpoint>
-          <enabled>true</enabled>
-        </fixedpoint>
-      </toolbox>
-      <toolbox>
-        <matlabcoder>
-          <enabled>true</enabled>
-        </matlabcoder>
-      </toolbox>
-      <toolbox>
-        <matlabhdlcoder>
-          <enabled>true</enabled>
-        </matlabhdlcoder>
-      </toolbox>
-      <toolbox>
-        <embeddedcoder>
-          <enabled>true</enabled>
-        </embeddedcoder>
-      </toolbox>
+      <toolboxes />
     </matlab>
     <platform>
       <unix>false</unix>
@@ -82,7 +58,7 @@
       <vista>false</vista>
       <linux>false</linux>
       <solaris>false</solaris>
-      <osver>6.2</osver>
+      <osver>6.1</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>win64</arch>

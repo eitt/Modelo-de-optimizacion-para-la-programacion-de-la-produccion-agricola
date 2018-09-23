@@ -1,0 +1,1085 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Modelo exacto}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{desarrollo-del-modelo-de-programaciuxf3n-entera-muxedxta-para-dos-objetivos}{%
+\section{Desarrollo del modelo de programación entera míxta para dos
+objetivos}\label{desarrollo-del-modelo-de-programaciuxf3n-entera-muxedxta-para-dos-objetivos}}
+
+    Este es el código para solucionar de manera exacta un modelo de
+optimización multiobjetivo (como aproximación se trabajan las dos
+funciones de manera independiente), el cual hace parte del proyecto de
+investigación titulado: \emph{Modelo de optimización multiobjetivo para
+la programación de la producción agrícola a pequeña escala en
+Santander}, Colombia, desarrollado por Leonardo H. Talero-Sarmiento,
+bajo la dirección de Henry Lamos-Díaz \& Edwin A. Garavito-Hernandez.
+
+El Código se divide en 3 etapas que se describen a continuación:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Parámetros de inicio}: Se ingresan los parámetros del modelo,
+  los cuales dependen de instancias generadas, por tanto, existirán
+  múltiples archivos .mat, los cuales tienen almacenadas las inctancias
+  y serán cargadas al principio del documento. Además, en esta sección
+  se construyen los vectores que se utilizarán para generar las
+  restricciones. (vectores b)
+\item
+  \textbf{Desarrollo del modelo}: Se construyen las matrices de
+  restricción, el problema ha sido abordado como un modelo de
+  optimización entera mixta, en esta sección se construye también el
+  vector solución.
+\item
+  \textbf{Cálculo de la solución}: Se evalúa el modelo, mediante la
+  aplicación de una función ya existente en MATLAB, se generan las
+  salidas del modelo.
+\end{enumerate}
+
+    \hypertarget{paruxe1metros-de-inicio}{%
+\subsection{Parámetros de inicio}\label{paruxe1metros-de-inicio}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c}{\PYZpc{} El codigo comienza con la limpieza de variables}
+        \PY{n}{clearvars}
+        \PY{n}{clc}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    Se cargan en el modelo diversos parámetros de los productos como:
+Duración promedio de maduración, cantidad de periodos para recoger el
+producto, etc. Con el fin de evitar recurrir a parámetros como el nombre
+o un identificador, todos los productos están organizados en orden
+descendentes (filas) .
+
+\emph{Ahuyama}
+
+\emph{Arverja}
+
+\emph{Cebolla Cabezona}
+
+\emph{Cebolla junta}
+
+\emph{Cilantro}
+
+\emph{Cebada}
+
+\emph{Maíz}
+
+\emph{Frijol}
+
+\emph{Habichuela}
+
+\emph{Lechuga}
+
+\emph{Perejil}
+
+\emph{Pimentón}
+
+\emph{Tomate}
+
+\emph{Banano}
+
+\emph{Lulo}
+
+\emph{Papaya}
+
+\emph{Piña}
+
+\emph{Arracacha}
+
+\emph{Papa}
+
+\emph{Plátano}
+
+\emph{Yuca}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{n}{load}\PY{p}{(}\PY{l+s}{\PYZsq{}}\PY{l+s}{productos\PYZus{}parametros.mat\PYZsq{}}\PY{p}{)}
+         \PY{c+cm}{\PYZpc{}\PYZob{} }
+         \PY{c+cm}{Conjunto\PYZus{}s: Vector con los instantes donde puede sembrarse cada producto.}
+         \PY{c+cm}{q:          Familia botánica a la que pertenece cada producto.}
+         \PY{c+cm}{Ni:         Número de periodos que se demora el producto k en \PYZdq{}Madurar\PYZdq{}.}
+         \PY{c+cm}{Pkt:        Precio de venta del producto K en el instante t}
+         \PY{c+cm}{Rkl:        Rendimiento en Kg/m2 de cada producto (col) por lote (fil)}
+         \PY{c+cm}{Al:         Área en metros de cada lote}
+         \PY{c+cm}{Gv          Grupo de productos sustitutos para satisfacer una demanda}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{c}{\PYZpc{}Variables para la instancia de prueba}
+         \PY{c}{\PYZpc{}Selecciono al azar 3 productos}
+         \PY{n}{productos} \PY{p}{=} \PY{n}{datasample}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{21}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{}Selecciono al azar 2 lotes}
+         \PY{n}{lotes}\PY{p}{=}\PY{n}{datasample}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+s}{\PYZsq{}}\PY{l+s}{Replace\PYZsq{}}\PY{p}{,}\PY{n}{false}\PY{p}{)}\PY{p}{;}
+         \PY{n}{q}\PY{p}{=}\PY{n}{q}\PY{p}{(}\PY{n}{productos}\PY{p}{)}\PY{p}{;}
+         \PY{n}{Conjunto\PYZus{}s}\PY{p}{=}\PY{n}{Conjunto\PYZus{}s}\PY{p}{(}\PY{n}{productos}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+         \PY{n}{Ni}\PY{p}{=}\PY{n}{Ni}\PY{p}{(}\PY{n}{productos}\PY{p}{)}\PY{p}{;}
+         \PY{n}{Pkt}\PY{p}{=}\PY{n}{Pkt}\PY{p}{(}\PY{n}{productos}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+         \PY{n}{Rkl}\PY{p}{=}\PY{n}{Rkl}\PY{p}{(}\PY{n}{lotes}\PY{p}{,}\PY{n}{productos}\PY{p}{)}\PY{p}{;}
+         \PY{n}{Al}\PY{p}{=}\PY{n}{Al}\PY{p}{(}\PY{n}{lotes}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+         
+         \PY{c}{\PYZpc{}Se crea un número muy grande y se calculan parámetros del caso (problema)}
+         \PY{n}{B}\PY{p}{=}\PY{l+m+mi}{10000000000}\PY{p}{;}
+         \PY{c}{\PYZpc{}Cantidad de periodos}
+         \PY{n}{T}\PY{p}{=}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Conjunto\PYZus{}s}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{}Cantidad de productos}
+         \PY{n}{K}\PY{p}{=}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Ni}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{}Cantidad de lotes}
+         \PY{n}{L}\PY{p}{=}\PY{n+nb}{length}\PY{p}{(}\PY{n}{Al}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Estimar la matriz de Covarianza de los rendimientos precios;}
+         \PY{n}{Covkkp}\PY{p}{=}\PY{n}{cov}\PY{p}{(}\PY{n}{diff}\PY{p}{(}\PY{n+nb}{log}\PY{p}{(}\PY{n}{Pkt}\PY{p}{)}\PY{o}{\PYZsq{}}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+         
+         \PY{c}{\PYZpc{} Determinar la cantidad de variables de decisión para cada una de las}
+         \PY{c}{\PYZpc{} familias de variables:}
+         
+         \PY{c}{\PYZpc{} \PYZob{}Y\PYZus{}t \PYZcb{}\PYZca{}\PYZob{}l,k\PYZcb{}}
+         \PY{n}{Cant\PYZus{}Y}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+         \PY{c}{\PYZpc{} \PYZob{}V\PYZus{}t \PYZcb{}\PYZca{}\PYZob{}l,k\PYZcb{}}
+         \PY{n}{Cant\PYZus{}V}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+         \PY{c}{\PYZpc{} \PYZob{}Z\PYZus{}t \PYZcb{}\PYZca{}\PYZob{}l,k\PYZcb{}}
+         \PY{n}{Cant\PYZus{}Z}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+         \PY{c}{\PYZpc{} \PYZob{}\PYZus{}y \PYZcb{}\PYZca{}\PYZob{}k,k\PYZcb{}}
+         \PY{n}{Cant\PYZus{}U}\PY{p}{=}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{;}
+         \PY{n}{Cant\PYZus{}var}\PY{p}{=}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{n}{Cant\PYZus{}U}\PY{p}{;}
+         
+         \PY{c}{\PYZpc{} Se crea el conjunto de instantes de recogida.}
+         \PY{n}{Conjunto\PYZus{}r}\PY{p}{=}\PY{n}{Conjunto\PYZus{}s}\PY{o}{*}\PY{l+m+mi}{0}\PY{p}{;}
+         \PY{n}{Restriccion\PYZus{}re}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Se calcula el conjunto de recogida para cada producto:}
+         
+         \PY{c}{\PYZpc{} Bucle que recorre cada producto}
+         \PY{k}{for} \PY{n}{k}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{Se ubican los posibles periodos de siembra, posterior a ello, calcular}
+         \PY{c+cm}{el periodo de madurez Ni, de tal manera que re=s+Ni para cada}
+         \PY{c+cm}{producto. Como el conjunto de siembra y por tanto el de recogida}
+         \PY{c+cm}{tiene dimensiones k*T, estas deben ser transformadas a un vector, con}
+         \PY{c+cm}{el fin de utilizarlas como restricciones.}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+             \PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n+nb}{find}\PY{p}{(}\PY{n}{Conjunto\PYZus{}s}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{El conjunto de recogida es almacenado para un único lote y debe ser}
+         \PY{c+cm}{completado en un bucle de lotes (para evitar la creación de bucles}
+         \PY{c+cm}{extras)}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+             \PY{n}{Restriccion\PYZus{}re}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+         \PY{k}{end}
+         \PY{c}{\PYZpc{} Se acota el conjunto de recogida para futuros cálculos}
+         \PY{n}{Conjunto\PYZus{}r}\PY{p}{=}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{Se crea el conjunto para determinar el área máxima de siembra para cada}
+         \PY{c+cm}{periodo, este conjunto funciona como restricción.}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}} 
+         \PY{n}{Restriccion\PYZus{}Al}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{p}{)}\PY{p}{;}
+         \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+             \PY{c}{\PYZpc{} Se almacena el valor del área Al(l) para cada conjunto de tamaño k*T}
+             \PY{n}{Restriccion\PYZus{}Al}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{l}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{;}
+             \PY{c}{\PYZpc{} Se aprovecha el bucle de lotes para completar el vector de recogidas}
+             \PY{n}{Restriccion\PYZus{}re}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{l}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Restriccion\PYZus{}re}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+         \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{desarrollo-del-modelo}{%
+\subsection{Desarrollo del Modelo}\label{desarrollo-del-modelo}}
+
+    \hypertarget{familia-de-restricciones-1-no-negatividad}{%
+\subsubsection{Familia de restricciones \#1: No
+negatividad}\label{familia-de-restricciones-1-no-negatividad}}
+
+Como son restricciones de no negatividad y se trabaja con la función
+\emph{intlinprog}, la no negatividad se modelo mediante el vector LB
+(\emph{Lower Bound}, Límite Inferior)
+
+    \hypertarget{familia-de-restricciones-2-periodos-de-recogida}{%
+\subsubsection{Familia de restricciones \#2: Periodos de
+recogida}\label{familia-de-restricciones-2-periodos-de-recogida}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{Se genera una matriz identidad en las variables Y (dicotómica de recogida}
+         \PY{c+cm}{del producto):}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{n}{A1}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} El vector b1 es la transpuesta del vector Restriccion\PYZus{}re}
+         \PY{n}{b1}\PY{p}{=}\PY{n}{Restriccion\PYZus{}re}\PY{o}{\PYZsq{}}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{La matriz relaciona las variables de decisión Y (dicotómica) con Z}
+         \PY{c+cm}{(contínua) a partir de la premultiplicación por un número muy grande, por}
+         \PY{c+cm}{tanto, la matriz de restricciones se compone de dos diagonales y un}
+         \PY{c+cm}{espacio vacío:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{n}{A2}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{B}\PY{p}{)}\PY{p}{,}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}V}\PY{p}{,}\PY{n}{Cant\PYZus{}V}\PY{p}{)}\PY{p}{,}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{Cant\PYZus{}Z}\PY{p}{,}\PY{n}{Cant\PYZus{}Z}\PY{p}{)}\PY{p}{,}\PY{c}{...}
+         \PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{p}{,}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+         
+         \PY{c}{\PYZpc{} El vector b2 es igual a un vector 0}
+         \PY{n}{b2}\PY{p}{=}\PY{n}{b1}\PY{o}{*}\PY{l+m+mi}{0}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-3-uxe1rea-destinada-a-siembra}{%
+\subsubsection{Familia de restricciones \#3: Área destinada a
+siembra}\label{familia-de-restricciones-3-uxe1rea-destinada-a-siembra}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}47}]:} \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{La matriz indica el área máxima destinada a cda cultivo (variable Z), por}
+         \PY{c+cm}{tanto, se modela como una diagonal igualada a la restricción:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}} 
+         \PY{n}{A3}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{p}{)}\PY{p}{,}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}V}\PY{p}{,}\PY{n}{Cant\PYZus{}V}\PY{p}{)}\PY{p}{,}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{Cant\PYZus{}Z}\PY{p}{,}\PY{n}{Cant\PYZus{}Z}\PY{p}{)}\PY{p}{,}\PY{c}{...}
+         \PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Z}\PY{p}{,}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} El vector b3 es la transpuesta del vector Restriccion\PYZus{}Al}
+         \PY{n}{b3}\PY{p}{=}\PY{n}{Restriccion\PYZus{}Al}\PY{o}{\PYZsq{}}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-4-satisfacciuxf3n-de-la-demanda}{%
+\subsubsection{Familia de restricciones \#4: Satisfacción de la
+demanda}\label{familia-de-restricciones-4-satisfacciuxf3n-de-la-demanda}}
+
+Para el caso particular, se considera que existen productos sustitutos
+y, por tanto, estos pueden satisacer una misma demanda. Para agrupar los
+productos se cuenta con el parámetro Gv, el cual indica a cuál familia
+de productos sustitutos pertenecen los productos k, como es posible que
+no existan todos las familias a la vez (dependiendo de la instancia), es
+necesario determinar cuáles familias existen y crear una familia de
+restricciones (matriz) por cada familia:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{c}{\PYZpc{}Determinar la cantidad de familias}
+         \PY{n}{F\PYZus{}Gv} \PY{p}{=} \PY{n}{unique}\PY{p}{(}\PY{n}{Gv}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{}Se actualiza la demanda para la cantidad de familias}
+         \PY{n}{Demanda\PYZus{}Gv}\PY{p}{=}\PY{n}{Demanda\PYZus{}Gv}\PY{p}{(}\PY{n}{F\PYZus{}Gv}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{}\PYZob{}Como la demanda cambia periodo a periodo, el tamaño de la matriz A4 es}
+         \PY{n}{igual} \PY{n}{a} \PY{n}{la} \PY{n}{cantidad} \PY{n}{de} \PY{n}{familias} \PY{n}{a} \PY{n}{satisfacer} \PY{n}{en} \PY{n}{cada} \PY{n}{tiempo} \PY{p}{(}\PY{n}{en} \PY{n}{las} \PY{n}{filas}\PY{p}{)}
+         \PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{F\PYZus{}Gv}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{p}{)} \PY{n}{por} \PY{n}{la} \PY{n}{cantidad} \PY{n}{de} \PY{n}{variables} \PY{n}{de} \PY{n}{decisión}\PY{p}{:}
+         \PY{c}{\PYZpc{}\PYZcb{}}
+         \PY{n}{A4}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{F\PYZus{}Gv}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{por su parte, el vectyor b4 tendrá la misma cantidad de filas y se}
+         \PY{c+cm}{subdividirá en tantas demandas como familias Gv existan:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{n}{b4}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{F\PYZus{}Gv}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{Como se construye tantas submatrices como familias, se genera un bucle:}
+         \PY{c+cm}{Desde la primera familia hasta la última}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{k}{for} \PY{n}{fgv}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{F\PYZus{}Gv}\PY{p}{)}
+             \PY{c}{\PYZpc{}\PYZob{} Como se debe recorrer todos los productos para determinar si}
+               \PY{n}{pertenecen} \PY{n}{o} \PY{n}{no} \PY{n}{a} \PY{n}{la} \PY{n}{misma} \PY{n}{familia} \PY{n}{Gv}\PY{p}{,} \PY{n}{se} \PY{n}{genera} \PY{n}{un} \PY{n}{bucle} \PY{n}{y} \PY{n}{se} \PY{n}{asigna}
+               \PY{n}{una} \PY{n}{submatriz} \PY{n}{identidad} \PY{n}{a} \PY{n}{aquellos} \PY{n}{productos} \PY{n}{que} \PY{n}{se} \PY{n}{van} \PY{n}{a} \PY{n}{relacionar}
+               \PY{n}{y} \PY{n}{una} \PY{n}{submatriz} \PY{n}{de} \PY{n}{ceros} \PY{n}{a} \PY{n}{aquellos} \PY{n}{que} \PY{n}{no} \PY{n}{pertenecen}\PY{p}{,} \PY{n}{se} \PY{n}{definen} \PY{n}{a}
+               \PY{n}{continuación}\PY{p}{:}
+             \PY{c}{\PYZpc{}\PYZcb{}}
+             \PY{n}{M\PYZus{}identidad}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+             \PY{n}{M\PYZus{}ceros}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+             \PY{c}{\PYZpc{} Además, se asignan los valores de demanda para el vector b4:}
+             \PY{n}{b4}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{fgv}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{fgv}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Demanda\PYZus{}Gv}\PY{p}{(}\PY{n}{fgv}\PY{p}{)}\PY{p}{;}
+                 \PY{c}{\PYZpc{} Para cada uno de los lotes}
+             \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+                 \PY{c}{\PYZpc{} Para cada uno de los productos}
+                 \PY{k}{for} \PY{n}{k}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                     \PY{k}{if} \PY{n}{Gv}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{o}{==}\PY{n}{F\PYZus{}Gv}\PY{p}{(}\PY{n}{fgv}\PY{p}{)}
+                         \PY{n}{A4}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{fgv}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{fgv}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}identidad}\PY{p}{;}
+                     \PY{k}{else}
+                         \PY{n}{A4}\PY{p}{(}\PY{p}{(}\PY{p}{(}\PY{n}{fgv}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{fgv}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}ceros}\PY{p}{;}
+                     \PY{k}{end}
+                 \PY{k}{end}
+             \PY{k}{end}
+         \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\textcolor{ansi-red-intense}{\textbf{Error: Unexpected MATLAB expression.
+
+}}
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-5-evitar-solapamiento}{%
+\subsubsection{Familia de restricciones \#5: Evitar
+solapamiento}\label{familia-de-restricciones-5-evitar-solapamiento}}
+
+Para evitar el solapamiento de los productos, se tiene en cuenta un
+producto k, el cual puede ser recogido en un instante de tiempo t, todos
+los productos (incluyendo al producto k) no pueden ser recogidos
+mientras dure el periodo de madurez del producto k, por tanto, se debe
+generar una submatriz de cargas que tenga como límite superior el
+instante de recogida -1 (t-1), y abarque el periodo de madurez del
+producto K. Por comodidad, se genera una matriz general (aún cuando el
+producto k no pueda ser recogido en el instante t=1). La cantidad de
+restricciones en este caso es igual al número de variables de decisión,
+por tanto, la matriz A5 inicial es igual a:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{n}{A5}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Se hace un recorrido para cada lote}
+         \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+             \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{    Para evitar excesos de bucles se calcula todo en el primer lote y se}
+         \PY{c+cm}{    reproduce para los lotes posteriores}
+         \PY{c+cm}{    \PYZpc{}\PYZcb{}}
+             \PY{k}{if} \PY{n}{l}\PY{o}{==}\PY{l+m+mi}{1}
+                 \PY{c}{\PYZpc{}     Se realiza un recorrido para cada producto}
+                 \PY{k}{for} \PY{n}{k}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                     \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{            }
+         \PY{c+cm}{             Se ubican las filas correspondientes al intervalo de}
+         \PY{c+cm}{             madurez del producto:}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}
+                     \PY{p}{[}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{]} \PY{p}{=} \PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{.*}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                     \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{            Se define el intervalo de madurez previo a la}
+         \PY{c+cm}{            recogida de cada producto}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}         
+                     \PY{n}{intervalo\PYZus{}madurez}\PY{p}{=}\PY{p}{[}\PY{n+nb}{find}\PY{p}{(}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{p}{;}\PY{n+nb}{find}\PY{p}{(}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{;}
+                     \PY{c+cm}{\PYZpc{}\PYZob{} }
+         \PY{c+cm}{            Se contruye una matriz para registar los periodos de}
+         \PY{c+cm}{            madurez}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}
+                     \PY{n}{M\PYZus{}madurez}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+                     \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{            Se realiza un bucle para cada uno de los posibles}
+         \PY{c+cm}{            periodos de madurez}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}
+                     \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{intervalo\PYZus{}madurez}\PY{p}{)}
+                         \PY{n}{M\PYZus{}madurez}\PY{p}{(}\PY{n}{row}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{n}{intervalo\PYZus{}madurez}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{:}\PY{n}{intervalo\PYZus{}madurez}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}
+                     \PY{k}{end}
+                     \PY{c}{\PYZpc{} Se repite el patrón para todos los productos}
+                     \PY{n}{A5}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n+nb}{repmat}\PY{p}{(}\PY{n}{M\PYZus{}madurez}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{K}\PY{p}{)}\PY{p}{;}
+                     \PY{c}{\PYZpc{} Se Agrega la diagonal en el producto correspondiente:}
+                     \PY{n}{A5}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{A5}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{o}{+}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{.*}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+                 \PY{k}{end}
+             \PY{k}{else}
+                 \PY{c}{\PYZpc{} Se replica la distribución de variables para todos los lotes}
+                 \PY{n}{A5}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{A5}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+             \PY{k}{end}
+         \PY{k}{end}
+         \PY{c}{\PYZpc{} Se crea el vector de restricción B5, el cual posee valores de 1:}
+         \PY{n}{b5}\PY{p}{=}\PY{n+nb}{ones}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-6-rotaciuxf3n-de-cultivos-k-diferente-k}{%
+\subsubsection{Familia de restricciones \#6: Rotación de cultivos (k'
+diferente
+k)}\label{familia-de-restricciones-6-rotaciuxf3n-de-cultivos-k-diferente-k}}
+
+Para la rotación de productos es necesario que el terreno descanse en
+f\^{}kk'o o\^{}kk' periodos, si pertenecen o no a la misma familia
+botánica (F). Teniendo en cuenta que, durante el presente caso se parte
+del supuesto que todos los productos deben descansar la misma cantidad
+de periodos, se construye una única restricción, la cual tiene en
+consideración dos familias de variables de decisión: Y (variable binaria
+utilziada para relacionar la recogida del producto) y la variable V
+(binaria que indica la activación y desactivación de restricciones). El
+tamaño total de la matriz A6 es equivalente a 2\emph{K}T\emph{L filas
+por la K}T*L columnas.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{l+m+mi}{6}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Posteriormente, se construye unas submatrices para cada periodo, estas se}
+        \PY{c+cm}{componen de dos estilos de matrices, la primera es la de tiempos de}
+        \PY{c+cm}{recogida, la cual corresponde a la sección de la restriccioón que incluye}
+        \PY{c+cm}{a la variable Y, premultiplicada por el tiempo y por la familia botánica}
+        \PY{c+cm}{del producto. La segunda submatriz tiene en consideración el tiempo menos}
+        \PY{c+cm}{el tiempo Ni de maduración de cada producto. Con el fin de evitar excesos}
+        \PY{c+cm}{de bucles, se realiza un único bucle para los lotes:}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{c}{\PYZpc{} para cada Lote}
+        \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+        \PY{c}{\PYZpc{}     Se hace la solución para el primer lote y luego se replica}
+            \PY{k}{if} \PY{n}{l}\PY{o}{==}\PY{l+m+mi}{1}
+        \PY{c}{\PYZpc{}         para cada producto k}
+                \PY{k}{for} \PY{n}{k1}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+        \PY{c}{\PYZpc{}             Para cada producto k\PYZsq{}}
+                    \PY{k}{for} \PY{n}{k2}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+        \PY{c}{\PYZpc{}                 Se calcula la diagonal de la matriz}
+                        \PY{k}{if} \PY{n}{k1}\PY{o}{==}\PY{n}{k2}                    
+                            \PY{c}{\PYZpc{} Se crea el conjunto o submatriz de recolección}
+                            \PY{n}{M\PYZus{}recoleccion}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}                     Para cada periodo}
+                            \PY{k}{for} \PY{n}{t}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}
+        \PY{c}{\PYZpc{}                         Se diligencia el producto k\PYZsq{} sembrado en el}
+        \PY{c}{\PYZpc{}                         instante t\PYZsq{} y recogido en t}
+        \PY{c}{\PYZpc{}                         el rango aplica sólo si t\PYZgt{}1}
+                                \PY{k}{if} \PY{n}{t}\PY{o}{\PYZgt{}}\PY{l+m+mi}{1}
+        \PY{c}{\PYZpc{}                             el rango va desde mínimo t=1, hasta el}
+        \PY{c}{\PYZpc{}                             instante previo a sembrar el product k en el}
+        \PY{c}{\PYZpc{}                             instante t}
+                                    \PY{n}{RANGO\PYZus{}ANTES}\PY{p}{=}\PY{p}{(}\PY{n}{max}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{t}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{p}{:}\PY{n}{t}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}                             Se almacena el conjunto en la submatriz}
+                                    \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}ANTES}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{RANGO\PYZus{}ANTES}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{end}
+        \PY{c}{\PYZpc{}                         Se diligencia el producto k, recogido en el instante t+Ni(k)}
+                                \PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{=}\PY{p}{(}\PY{n}{t}\PY{p}{:}\PY{n}{min}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}                         Se almacena el conjunto en la submatriz}
+                                \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{)}\PY{p}{=}\PY{p}{(}\PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}                         Se calcula el conjunto para el producto k\PYZsq{}}
+        \PY{c}{\PYZpc{}                         recogido en el instante t\PYZsq{}, posterior a t t\PYZsq{}\PYZgt{}t}
+        \PY{c}{\PYZpc{}                        Se verifica que no exceda el tiempo máximo del subconjunto}
+                                \PY{k}{if} \PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{\PYZlt{}}\PY{n}{T}
+        \PY{c}{\PYZpc{}                             se crea el periodo de maduración.}
+                                    \PY{n}{RANGO\PYZus{}DESPUES}\PY{p}{=}\PY{p}{(}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{p}{:}\PY{n}{min}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}                             Se almacena el conjunto en la submatriz}
+                                    \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}DESPUES}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{RANGO\PYZus{}DESPUES}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{end}
+                            \PY{k}{end}
+        \PY{c}{\PYZpc{}                     se almacena el subconjunto en la matriz de cargas}
+                            \PY{n}{A6}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}recoleccion}\PY{p}{;}
+        \PY{c}{\PYZpc{}                 se replica el proceso cuando k\PYZsq{}\PYZgt{}k (posición en el conjunto K)    }
+                        \PY{k}{elseif} \PY{n}{k2}\PY{o}{\PYZgt{}}\PY{n}{k1}
+                            \PY{n}{M\PYZus{}recoleccion}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+                            \PY{k}{for} \PY{n}{t}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}
+                                \PY{c}{\PYZpc{}                         Diagonal antes}
+                                \PY{k}{if} \PY{n}{t}\PY{o}{\PYZgt{}}\PY{l+m+mi}{1}
+                                    \PY{n}{RANGO\PYZus{}ANTES}\PY{p}{=}\PY{p}{(}\PY{n}{max}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{t}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{p}{:}\PY{n}{t}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                                    \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}ANTES}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{RANGO\PYZus{}ANTES}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{end}
+                                \PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{=}\PY{p}{(}\PY{n}{t}\PY{p}{:}\PY{n}{min}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                                \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{)}\PY{p}{=}\PY{p}{(}\PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{if} \PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{\PYZlt{}}\PY{n}{T}
+                                    \PY{n}{RANGO\PYZus{}DESPUES}\PY{p}{=}\PY{p}{(}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{p}{:}\PY{n}{min}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                                    \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}DESPUES}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{RANGO\PYZus{}DESPUES}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{end}
+                            \PY{k}{end}
+                            \PY{n}{A6}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}recoleccion}\PY{p}{;}
+                            \PY{c}{\PYZpc{}                 se replica el proceso cuando k\PYZsq{}\PYZlt{}k (posición en el conjunto K)}
+                        \PY{k}{else}
+                            \PY{c}{\PYZpc{} Se crea el conjunto o submatriz de recolección}
+                            \PY{n}{M\PYZus{}recoleccion}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+                            \PY{k}{for} \PY{n}{t}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}
+                                \PY{c}{\PYZpc{}                         Diagonal antes}
+                                \PY{k}{if} \PY{n}{t}\PY{o}{\PYZgt{}}\PY{l+m+mi}{1}
+                                    \PY{n}{RANGO\PYZus{}ANTES}\PY{p}{=}\PY{p}{(}\PY{n}{max}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{t}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{p}{:}\PY{n}{t}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                                    \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}ANTES}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{RANGO\PYZus{}ANTES}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{end}
+                                \PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{=}\PY{p}{(}\PY{n}{t}\PY{p}{:}\PY{n}{min}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                                \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{)}\PY{p}{=}\PY{p}{(}\PY{n}{RANGO\PYZus{}DIAGONAL}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{if} \PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{\PYZlt{}}\PY{n}{T}
+                                    \PY{n}{RANGO\PYZus{}DESPUES}\PY{p}{=}\PY{p}{(}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{p}{:}\PY{n}{min}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{t}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k1}\PY{p}{)}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                                    \PY{n}{M\PYZus{}recoleccion}\PY{p}{(}\PY{n}{t}\PY{p}{,}\PY{n}{RANGO\PYZus{}DESPUES}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{p}{(}\PY{n}{RANGO\PYZus{}DESPUES}\PY{o}{\PYZhy{}}\PY{n}{Ni}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{q}\PY{p}{(}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                                \PY{k}{end}
+                            \PY{k}{end}
+                            \PY{n}{A6}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}recoleccion}\PY{p}{;}
+                            
+                        \PY{k}{end}
+                    \PY{k}{end}
+                \PY{k}{end}
+            \PY{k}{else}
+               \PY{c}{\PYZpc{} Se replica la distribución de variables para todos los lotes}
+                \PY{n}{A6}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{A6}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{;}  
+            \PY{k}{end}
+        \PY{k}{end}
+        
+        \PY{c}{\PYZpc{} Se construye la matriz de cargas de la variable V}
+        \PY{n}{A6}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n}{B}\PY{o}{*}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Finalmente, se replica la matriz de carga, pero con valores negativos,}
+        \PY{c}{\PYZpc{} con el fin de generar cada par de variables excluyentes:}
+        
+        \PY{p}{[}\PY{n}{row}\PY{p}{,}\PY{o}{\PYZti{}}\PY{p}{]} \PY{p}{=} \PY{n+nb}{size}\PY{p}{(}\PY{n}{A6}\PY{p}{)}\PY{p}{;}
+        \PY{n}{A6}\PY{p}{(}\PY{n}{row}\PY{o}{/}\PY{l+m+mi}{2}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{row}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n}{A6}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{row}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+        
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{Posterior a la creación de las restricciones Y, se construye la restricción}
+        \PY{c+cm}{de la variable V, la cual va desde 1 hasta K*L*T. Su valor es}
+        \PY{c+cm}{el negativo de un número muy grande}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}} 
+        
+        \PY{n}{A6}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n}{B}\PY{o}{*}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{n}{L}\PY{p}{)}\PY{p}{;}
+        \PY{c+cm}{\PYZpc{}\PYZob{}}
+        \PY{c+cm}{para la construcción del vector restricción, se tiene en cuenta la}
+        \PY{c+cm}{diferencia entre grupos F\PYZca{}k,k\PYZsq{} o o\PYZca{}k,k\PYZsq{}; en este caso, ambas igual a 1,}
+        \PY{c+cm}{por tanto:}
+        \PY{c+cm}{\PYZpc{}\PYZcb{}}
+        \PY{n}{b6}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{n+nb}{ones}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n+nb}{ones}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{L}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{B}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \hypertarget{familia-de-restricciones-7-espacio-entre-siembra-del-mismo-cultivo}{%
+\subsubsection{Familia de restricciones \#7 Espacio entre siembra del
+mismo
+cultivo}\label{familia-de-restricciones-7-espacio-entre-siembra-del-mismo-cultivo}}
+
+Como caso especial, cuando no se realiza la rotación de un producto, la
+recogida (y respectiva siembra) del siguiente producto no puede
+realizarse en un periodo inferior de descanso de al menos fkk semanas.
+Por tanto, se construye una matriz de restricción A7 con tantas filas
+como varialbes Y y que abarca una cantidad de columnas igual a la
+cantidad de variables de decisión:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} \PY{c}{\PYZpc{} Se construye el la matriz:}
+         \PY{n}{A7}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Se hace un recorrido para cada lote}
+         \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+             \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{    Para evitar excesos de bucles se calcula todo en el primer lote y se}
+         \PY{c+cm}{    reproduce para los lotes posteriores}
+         \PY{c+cm}{    \PYZpc{}\PYZcb{}}
+             \PY{k}{if} \PY{n}{l}\PY{o}{==}\PY{l+m+mi}{1}
+                 \PY{c}{\PYZpc{}     Se realiza un recorrido para cada producto}
+                 \PY{k}{for} \PY{n}{k}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                     \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{             Se ubican las filas correspondientes al intervalo de}
+         \PY{c+cm}{             madurez del producto:}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}        
+                     \PY{p}{[}\PY{n}{row}\PY{p}{,} \PY{n}{col}\PY{p}{]} \PY{p}{=} \PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{.*}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                     \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{            Se define el intervalo de madurez posterior a la}
+         \PY{c+cm}{            recogida de cada producto más la holgura o descanso}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}         
+                     \PY{c}{\PYZpc{}         }
+                     \PY{n}{intervalo\PYZus{}madurez}\PY{p}{=}\PY{p}{[}\PY{n+nb}{find}\PY{p}{(}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{;}\PY{c}{...}
+                     \PY{n}{min}\PY{p}{(}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} \PY{c}{...}
+                     \PY{n+nb}{ones}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n+nb}{find}\PY{p}{(}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{T}\PY{p}{)}\PY{o}{==}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{Ni}\PY{p}{(}\PY{n}{k}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{]}\PY{p}{;}
+                     \PY{c}{\PYZpc{}Se contruye una matriz para registar los periodos de madurez}
+                     \PY{n}{M\PYZus{}madurez}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+                     \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{            Se realiza un bucle para cada uno de los posibles}
+         \PY{c+cm}{            periodos de madurez}
+         \PY{c+cm}{            \PYZpc{}\PYZcb{}}
+                     \PY{k}{for} \PY{n+nb}{i}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n+nb}{length}\PY{p}{(}\PY{n}{intervalo\PYZus{}madurez}\PY{p}{)}
+                         \PY{n}{M\PYZus{}madurez}\PY{p}{(}\PY{n}{row}\PY{p}{(}\PY{n+nb}{i}\PY{p}{)}\PY{p}{,}\PY{n}{intervalo\PYZus{}madurez}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{:}\PY{n}{intervalo\PYZus{}madurez}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,}\PY{n+nb}{i}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{;}
+                     \PY{k}{end}
+                     \PY{c}{\PYZpc{}Se repite el patrón para todos los productos}
+                     \PY{n}{A7}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{o}{*}\PY{n}{K}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n+nb}{repmat}\PY{p}{(}\PY{n}{M\PYZus{}madurez}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{K}\PY{p}{)}\PY{p}{;}
+                     \PY{c}{\PYZpc{}Se Agrega la diagonal en el producto correspondiente:}
+                     \PY{n}{A7}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{A7}\PY{p}{(}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{o}{+}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{.*}\PY{n}{Conjunto\PYZus{}r}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{p}{:}\PY{p}{)}\PY{p}{;}
+                 \PY{k}{end}
+             \PY{k}{else}
+                 \PY{c}{\PYZpc{} Se replica la distribución de variables para todos los lotes}
+                 \PY{n}{A7}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{,}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{A7}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{;}
+             \PY{k}{end}
+         \PY{k}{end}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{Se crea el vector de restricción b7, el cual posee valores de 1 en los}
+         \PY{c+cm}{periodos donde es posible realizar la recolección:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}} 
+         \PY{n}{b7}\PY{p}{=}\PY{n}{b1}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-8-proporciuxf3n-de-uxe1reas-recogidas-para-cada-par}{%
+\subsubsection{Familia de restricciones \#8: Proporción de áreas
+recogidas (para cada
+par)}\label{familia-de-restricciones-8-proporciuxf3n-de-uxe1reas-recogidas-para-cada-par}}
+
+La octava familia de restricciones relacionan dos variables de decisión:
+Uk,k' (la cual premultiplica l amatriz de varianza-covarianza) con la
+variable de decisión Z l,k,t y el rendimiento (calculando así el volumen
+de producción) Como la variable U no posee índice t, la matriz de cargas
+para Z tiene (k\^{}2 )\emph{T filas (para estimar cada interacción) y
+L}K*T columnas.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}61}]:} \PY{n}{A8}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{se contruye el vector b8 de restricciones, el cual relaciona las áreas}
+         \PY{c+cm}{máximas donde está cultivado cada producto:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{n}{b8}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{para reducir la cantidad de bucles, la asignación de las cargas comienza}
+         \PY{c+cm}{por los productos (conjuntos que más se repiten) y posteriormente se}
+         \PY{c+cm}{recalcula el valor para el respectivo lote:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{k}{for} \PY{n}{k1}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+             \PY{k}{for} \PY{n}{k2}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                 \PY{c}{\PYZpc{} se genera el bucle para cada lote:}
+                 \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+                     \PY{k}{if} \PY{n}{k1}\PY{o}{==}\PY{n}{k2}
+                     \PY{c}{\PYZpc{}Se crea una matriz diagonal a la cual se premultiplican las}
+                     \PY{c}{\PYZpc{}áreas:}
+                     \PY{n}{M\PYZus{}areas}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k2}\PY{p}{)}\PY{o}{*}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{o}{*}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{;}
+                     \PY{c}{\PYZpc{}Se asigna el valor de la submatriz en la matriz de cargas A:}
+                     \PY{n}{A8}\PY{p}{(}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+                     \PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+                     \PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}areas}\PY{p}{;}
+                     \PY{k}{else}
+                         \PY{n}{M\PYZus{}areask1}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{o}{*}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{o}{*}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                         \PY{n}{M\PYZus{}areask2}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{o}{*}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{o}{*}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                         \PY{n}{A8}\PY{p}{(}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+                         \PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+                         \PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}areask1}\PY{p}{;}
+                         \PY{n}{A8}\PY{p}{(}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+                         \PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{c}{...}
+                         \PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}areask2}\PY{p}{;}
+                     \PY{k}{end}
+                 \PY{k}{end}
+             \PY{k}{end}
+         \PY{k}{end}
+         \PY{c}{\PYZpc{} Respecto a la variable U, se crea una diagonal positiva}
+         \PY{n}{A8}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Se diligencia el vector b8}
+         \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+             \PY{n}{b8}\PY{p}{(}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{;}
+         \PY{k}{end}
+         \PY{n}{b8}\PY{p}{=}\PY{n}{b8}\PY{o}{.\PYZca{}}\PY{l+m+mi}{2}\PY{p}{;}
+         \PY{n}{col1}\PY{p}{=}\PY{n}{b8}\PY{o}{*}\PY{l+m+mi}{0}\PY{p}{;}
+         \PY{n}{col2}\PY{p}{=}\PY{n}{col1}\PY{p}{;}
+         \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+             \PY{k}{for} \PY{n}{k1}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                 \PY{n}{recorrido1}\PY{p}{=}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                 \PY{n}{col1}\PY{p}{(}\PY{n}{recorrido1}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{recorrido1}\PY{o}{+}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{p}{;}
+                 \PY{k}{for} \PY{n}{k2}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                     \PY{n}{recorrido2}\PY{p}{=}\PY{n}{recorrido1}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                     \PY{n}{col2}\PY{p}{(}\PY{n}{recorrido2}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{recorrido2}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+                 \PY{k}{end}
+             \PY{k}{end}    
+         \PY{k}{end}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-9-proporciuxf3n-de-uxe1reas-ukk-cantidad-de-producto-k-recogido-en-cada-instante-t.}{%
+\subsubsection{Familia de restricciones \#9: Proporción de Áreas
+U\^{}\{k,k'\} Cantidad de producto k, recogido en cada instante
+t.}\label{familia-de-restricciones-9-proporciuxf3n-de-uxe1reas-ukk-cantidad-de-producto-k-recogido-en-cada-instante-t.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}62}]:} \PY{c}{\PYZpc{} Se contruye la matriz de cargas para la familia de restricciones}
+         \PY{n}{A9}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Se construye el vector de restricciones b9:}
+         \PY{n}{b9}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{para reducir la cantidad de bucles, la asignación de las cargas comienza}
+         \PY{c+cm}{por los productos (conjuntos que más se repiten) y posteriormente se}
+         \PY{c+cm}{recalcula el valor para el respectivo lote:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+           \PY{n}{A9}\PY{p}{(}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{c}{...}
+           \PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n+nb}{repmat}\PY{p}{(}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{p}{,}\PY{n}{K}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+           \PY{n}{b9}\PY{p}{(}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{p}{)}\PY{p}{=}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{p}{;}
+         \PY{k}{end}
+         \PY{n}{A9}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{p}{=}\PY{n}{A9}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{o}{.*}\PY{n}{b9}\PY{o}{.*}\PY{n}{col1}\PY{o}{.*}\PY{n}{col2}\PY{o}{*}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{;}
+         \PY{n}{A9}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{o}{\PYZhy{}}\PY{n}{Cant\PYZus{}U}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{p}{;}
+         \PY{n}{b9}\PY{p}{=}\PY{n}{b9}\PY{o}{*}\PY{l+m+mi}{0}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{familia-de-restricciones-10-proporciuxf3n-de-uxe1reas-ukk-cantidad-de-producto-k-recogido-en-cada-instante-t.}{%
+\subsubsection{Familia de restricciones \#10: Proporción de Áreas
+U\^{}\{k,k'\} Cantidad de \% producto k, recogido en cada instante
+t.}\label{familia-de-restricciones-10-proporciuxf3n-de-uxe1reas-ukk-cantidad-de-producto-k-recogido-en-cada-instante-t.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}63}]:} \PY{c}{\PYZpc{} Se contruye la matriz de cargas para la familia de restricciones}
+         \PY{n}{A10}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{;}
+         \PY{c}{\PYZpc{} Se construye el vector de restricciones b9:}
+         \PY{n}{b10}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+         \PY{c+cm}{\PYZpc{}\PYZob{}}
+         \PY{c+cm}{para reducir la cantidad de bucles, la asignación de las cargas comienza}
+         \PY{c+cm}{por los productos (conjuntos que más se repiten) y posteriormente se}
+         \PY{c+cm}{recalcula el valor para el respectivo lote:}
+         \PY{c+cm}{\PYZpc{}\PYZcb{}}
+         \PY{k}{for} \PY{n}{k1}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+             \PY{k}{for} \PY{n}{k2}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                 \PY{c}{\PYZpc{} se genera el bucle para cada lote:}
+                 \PY{k}{for} \PY{n}{l}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{L}
+                     \PY{k}{if} \PY{n}{k1}\PY{o}{==}\PY{n}{k2}
+                     \PY{c}{\PYZpc{}Se crea una matriz diagonal a la cual se premultiplican las áreas:}
+                     \PY{n}{M\PYZus{}areas}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{o}{*}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{o}{*}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                     \PY{c}{\PYZpc{}Se asigna el valor de la submatriz en la matriz de cargas A:}
+                     \PY{n}{A10}\PY{p}{(}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+                     \PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{c}{...}
+                     \PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}areas}\PY{p}{;}
+                     \PY{k}{else}
+                         \PY{n}{M\PYZus{}areask1}\PY{p}{=}\PY{o}{\PYZhy{}}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k1}\PY{p}{)}\PY{o}{*}\PY{n}{Al}\PY{p}{(}\PY{n}{l}\PY{p}{)}\PY{o}{*}\PY{n}{Rkl}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{k2}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+                         \PY{n}{A10}\PY{p}{(}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{c}{...}
+                         \PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{c}{...}
+                         \PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{M\PYZus{}areask1}\PY{p}{;}
+                      \PY{k}{end}
+                 \PY{k}{end}
+             \PY{k}{end}
+         \PY{k}{end}
+         \PY{n}{A10}\PY{p}{(}\PY{p}{:}\PY{p}{,}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{o}{+}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}var}\PY{p}{)}\PY{p}{=}\PY{n+nb}{eye}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{n}{Cant\PYZus{}U}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+
+    \end{Verbatim}
+
+    \hypertarget{cuxe1lculo-de-la-soluciuxf3n}{%
+\subsection{Cálculo de la solución}\label{cuxe1lculo-de-la-soluciuxf3n}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c}{\PYZpc{} Se integran todas las restricciones, comenzando por la matriz de cargas:}
+        \PY{n}{A}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{A1}\PY{p}{,}\PY{n}{A2}\PY{p}{,}\PY{n}{A3}\PY{p}{,}\PY{n}{A4}\PY{p}{,}\PY{n}{A5}\PY{p}{,}\PY{n}{A6}\PY{p}{,}\PY{n}{A7}\PY{p}{,}\PY{n}{A8}\PY{p}{,}\PY{n}{A9}\PY{p}{,}\PY{n}{A10}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{} Seguida del vector de desigualdades}
+        \PY{n}{b}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{b1}\PY{p}{,}\PY{n}{b2}\PY{p}{,}\PY{n}{b3}\PY{p}{,}\PY{n}{b4}\PY{p}{,}\PY{n}{b5}\PY{p}{,}\PY{n}{b6}\PY{p}{,}\PY{n}{b7}\PY{p}{,}\PY{n}{b8}\PY{p}{,}\PY{n}{b9}\PY{p}{,}\PY{n}{b10}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se contruyen en etapas los vectores que multiplica las variables objetivo}
+        \PY{c}{\PYZpc{} Primera función (máximizar ingresos)}
+        \PY{n}{f} \PY{p}{=} \PY{o}{\PYZhy{}}\PY{n+nb}{repmat}\PY{p}{(}\PY{n}{Pkt}\PY{p}{(}\PY{p}{:}\PY{p}{)}\PY{p}{,}\PY{n}{L}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{n}{f}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{f}\PY{p}{,}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Segunda función (mínimizar riesgo financiero)}
+        \PY{c}{\PYZpc{}Se calcula la covarianza para todos los lotes}
+        \PY{n}{cova}\PY{p}{=}\PY{n+nb}{zeros}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{Cant\PYZus{}U}\PY{o}{/}\PY{n}{L}\PY{p}{)}\PY{p}{;}
+        \PY{k}{for} \PY{n}{k1}\PY{p}{=} \PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+            \PY{k}{for} \PY{n}{k2}\PY{p}{=}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{K}
+                \PY{n}{recorrido}\PY{p}{=}\PY{p}{(}\PY{p}{(}\PY{n}{K}\PY{o}{*}\PY{n}{T}\PY{p}{)}\PY{o}{*}\PY{p}{(}\PY{n}{k1}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{n}{T}\PY{o}{*}\PY{p}{(}\PY{n}{k2}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+                \PY{n}{cova}\PY{p}{(}\PY{n}{recorrido}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{:}\PY{n}{recorrido}\PY{o}{+}\PY{n}{T}\PY{p}{)}\PY{p}{=}\PY{n}{Covkkp}\PY{p}{(}\PY{n}{k1}\PY{p}{,}\PY{n}{k2}\PY{p}{)}\PY{p}{;}
+            \PY{k}{end}
+        \PY{k}{end}
+        \PY{n}{cova}\PY{p}{=}\PY{n+nb}{repmat}\PY{p}{(}\PY{n}{cova}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{L}\PY{p}{)}\PY{p}{;}
+        \PY{n}{f2}\PY{p}{=}\PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{zeros}\PY{p}{(}\PY{n}{Cant\PYZus{}var}\PY{o}{\PYZhy{}}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{cova}\PY{o}{\PYZsq{}}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se genera la restricción de tipo de variables enteras}
+        \PY{n}{intcon} \PY{p}{=} \PY{l+m+mi}{1}\PY{p}{:}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se indica que no existen restricciones de igualdad}
+        \PY{n}{Aeq} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{n}{beq} \PY{p}{=} \PY{p}{[}\PY{p}{]}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se genera la restricción de signo Familia de restricciones \PYZsh{}1}
+        \PY{n}{lb} \PY{p}{=} \PY{n+nb}{zeros}\PY{p}{(}\PY{n+nb}{length}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se genera la cota superior de valores}
+        \PY{n}{ub} \PY{p}{=}  \PY{n+nb}{cat}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n+nb}{ones}\PY{p}{(}\PY{n}{Cant\PYZus{}Y}\PY{o}{+}\PY{n}{Cant\PYZus{}V}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,}\PY{n}{Inf}\PY{p}{(}\PY{n}{Cant\PYZus{}Z}\PY{o}{+}\PY{n}{Cant\PYZus{}U}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se soluciona el problema como un problema mono objetivo }
+        \PY{c}{\PYZpc{}Máximizar ingresos}
+        \PY{n}{x}\PY{p}{=}\PY{n}{intlinprog}\PY{p}{(}\PY{n}{f}\PY{p}{,}\PY{n}{intcon}\PY{o}{\PYZsq{}}\PY{p}{,}\PY{n}{A}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lb}\PY{p}{,}\PY{n}{ub}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se soluciona el problema como un problema mono objetivo }
+        \PY{c}{\PYZpc{}Mínimizar riesgos}
+        \PY{n}{x2}\PY{p}{=}\PY{n}{intlinprog}\PY{p}{(}\PY{n}{f2}\PY{p}{,}\PY{n}{intcon}\PY{o}{\PYZsq{}}\PY{p}{,}\PY{n}{A}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lb}\PY{p}{,}\PY{n}{ub}\PY{p}{)}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se soluciona el problema como un problema mono objetivo }
+        \PY{c}{\PYZpc{}Ponderar funciones}
+        \PY{n}{ponderacion}\PY{p}{=}\PY{l+m+mf}{0.5}\PY{p}{;}
+        \PY{c}{\PYZpc{}Vector que multiplica la función objetivo}
+        \PY{n}{f3}\PY{p}{=}\PY{n}{f}\PY{o}{*}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{\PYZhy{}}\PY{n}{ponderacion}\PY{p}{)}\PY{o}{+}\PY{n}{f2}\PY{o}{*}\PY{n}{ponderacion}\PY{p}{;}
+        \PY{c}{\PYZpc{}Se calcula al solución}
+        \PY{n}{x3}\PY{p}{=}\PY{n}{intlinprog}\PY{p}{(}\PY{n}{f3}\PY{p}{,}\PY{n}{intcon}\PY{o}{\PYZsq{}}\PY{p}{,}\PY{n}{A}\PY{p}{,}\PY{n}{b}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{p}{[}\PY{p}{]}\PY{p}{,}\PY{n}{lb}\PY{p}{,}\PY{n}{ub}\PY{p}{)}\PY{p}{;}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
